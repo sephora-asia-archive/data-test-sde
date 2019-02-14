@@ -7,7 +7,7 @@ You can write your code in the language of your choice. But we have preferences 
 - NodeJS
 
 Please organise your code, document it and write relevant unit tests.
-Please also inform on any specific setup which is required to make your code run.
+Do provide instructions for any specific setup required to run your code. 
 
 ## Context
 
@@ -24,22 +24,21 @@ The __products__ table is created from a chain of dependent SQL scripts. The pro
 3. Create the `final.products` table (from the `res/final/products.sql` script)
 
 This assignment is roughly about recreating this implementation.
-We will first focus on the logic to implement and run the dependencie tree, and then deploy it and run it against a real data warehouse instance.
-
+We will first focus on the logic to implement and run the dependency tree, followed by a deployment and running it against a real data warehouse instance.
 
 ## Your tasks
 
-### A - Dependancies Orchestration
+### A - Dependencies Orchestration
 
 Your task is to build parts of the tool that will orchestrate the aforementioned process, in order to create the `final.products` table:
 
 1. Write a function that shows the dependencies between all the sql scripts (from scratch, no specialized library!) _eg._ showing that `tmp.item_purchase_prices` depends on `raw.purchase_line_items` and `raw.purchase_items`.
 
-2. Write a function that, using the previous question, runs the sql scripts in the correct order. Please provide documentation as of how you are proceeding.
+2. Write a function, using the previous question, that would run the SQL scripts in the correct order. Please provide documentation as of how you are proceeding.
 
 *Going further, we would like to parallelize the execution of few of these scripts. If you think of the dependencies as a tree: scripts from different nodes can work simultaneously, but, still, must not be executed before its children's tasks are done.*
 
-3. Write a function that paralellizes the execution of the SQL scripts, ensuring they respect their dependencies. Please provide documentation as of how you are proceeding.
+3. Write a function that parallelize the execution of the SQL scripts, ensuring they respect their dependencies. Please provide documentation as of how you are proceeding.
 
 
 
@@ -48,9 +47,9 @@ Your task is to build parts of the tool that will orchestrate the aforementioned
 In this section, we will work on deploying an implementation of the previous question. 
 
 1. Setting up a BigQuery instance. 
-The datawarehousing platform that we are using in Sephora is Google Bigquery.
-Google allows you to try BigQuery for free with a google account (that you have by default with a gmail address for example)
-- Go on https://bigquery.cloud.google.com/welcome, login and create a project.
+The data warehouse platform that we are using in Sephora is Google Bigquery.
+Google allows you to try BigQuery for free with a Google account (that you have by default with a gmail address for example)
+- Go to https://bigquery.cloud.google.com/welcome, login and create a project.
 - You will be redirected to console.developers.google.com where you can give a name to your project. 
 - Once the project is created, and if not done by default, activate BigQuery API there: https://console.developers.google.com/apis/api/bigquery-json.googleapis.com/ (you might have to select your project in the header)
 - Once done, you now have access to bigquery ! https://bigquery.cloud.google.com/
@@ -62,12 +61,12 @@ Google allows you to try BigQuery for free with a google account (that you have 
 The instance is now ready !
 
 2. Update your previous code to run on BigQuery. Instead of having a fake function simulating the execution of the query in section A, implement it to run on BigQuery.
-Once run, the `tmp` and `final` datasets should be populated as results of the `raw` data. Google BigQuery has a [documented API](https://cloud.google.com/bigquery/docs/reference/rest/v2/) as well as a bunch of SDKs available. 
+Upon execution, the `tmp` and `final` datasets should be populated based on the `raw` data. Google BigQuery has a [documented API](https://cloud.google.com/bigquery/docs/reference/rest/v2/) as well as a bunch of SDKs available. 
 
 3. Deploy an API on the platform of your choice. The API should obey the following specifications: 
 
 - `GET /run`  : Runs the code implemented in B-2. When this endpoint is called, the `tmp` and `final` tables should be recreated.
-- `GET /add?table_name=products&name=banana%20lipstick&category_id=4&external_id=123&type=product` : Appens a new line in the defined `table_name` in the raw dataset. For this point, we can assume that the consumer of the API will always input a valid query (existing table name, exisitng field names and valid input).
+- `GET /add?table_name=products&name=banana%20lipstick&category_id=4&external_id=123&type=product` : Append a new row in the defined `table_name` in the `raw` dataset. For this point, we can assume that the consumer of the API will always input a valid query (existing table name, exisitng field names and valid input).
 - The endpoints can be public. 
 - The endpoints should return an appropriate status code.
 
