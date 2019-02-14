@@ -11,7 +11,7 @@ Please also inform on any specific setup which is required to make your code run
 
 ## Context
 
-At Sephora SEA, we are building business schemas on top of the e-commerce databases.
+At Sephora SEA, we are building business schemas on top of the e-commerce source databases.
 For instance, we have a __products__ table which is a consolidation of 30 other tables.
 It contains information for each of our products (ids, descriptions, categories...).
 
@@ -61,13 +61,15 @@ Google allows you to try BigQuery for free with a google account (that you have 
 
 The instance is now ready !
 
-2. Update your previous code to run on BigQuery. Instead of having a fake function simulating the execution of the query, implement it to run on BigQuery.
+2. Update your previous code to run on BigQuery. Instead of having a fake function simulating the execution of the query in section A, implement it to run on BigQuery.
 Once run, the `tmp` and `final` datasets should be populated as results of the `raw` data. Google BigQuery has a [documented API](https://cloud.google.com/bigquery/docs/reference/rest/v2/) as well as a bunch of SDKs available. 
 
 3. Deploy an API on the platform of your choice. The API should obey the following specifications: 
 
-- `GET /run`  : Runs the previously implemented code.
-- `GET /add?table_name=products&name=banana%20lipstick&category_id=4&external_id=123&type=product` : Appens a new ligne in the defined `table_name` in the raw dataset. For this point, we can assume that the consumer of the API knows the available fields of the table and will not make any type mistakes, nor will miss a field in the query.
+- `GET /run`  : Runs the code implemented in B-2. When this endpoint is called, the `tmp` and `final` tables should be recreated.
+- `GET /add?table_name=products&name=banana%20lipstick&category_id=4&external_id=123&type=product` : Appens a new line in the defined `table_name` in the raw dataset. For this point, we can assume that the consumer of the API will always input a valid query (existing table name, exisitng field names and valid input).
+- The endpoints can be public. 
+- The endpoints should return an appropriate status code.
 
 
 ## Notes
