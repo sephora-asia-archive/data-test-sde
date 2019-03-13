@@ -1,0 +1,13 @@
+CREATE OR REPLACE TABLE `raw.purchase_line_items`
+(
+    id INT64,
+    sku_id INT64,
+    distribution_center STRING,
+    batch_purchase_id INT64
+) AS 
+SELECT 1, 4532, 'SG', 9012
+UNION ALL SELECT 2, 2142, 'AU', 5678
+UNION ALL SELECT 3, 4536, 'AU', 5678
+UNION ALL SELECT 4, 8567, 'SG', 7890
+UNION ALL SELECT 5, 7557, 'SG', 9012
+UNION ALL SELECT 6, 9320, 'SG', 8901

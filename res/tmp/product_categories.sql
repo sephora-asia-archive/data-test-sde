@@ -6,5 +6,5 @@ SELECT
         )
     ) AS categories
 FROM `raw.products` p
-LEFT JOIN `raw.categories` c ON  p.category_id = c.id
+    LEFT JOIN `raw.categories` c ON  p.category_id = c.id
 GROUP BY 1

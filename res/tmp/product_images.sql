@@ -4,5 +4,6 @@ SELECT
         p.url
     ) AS urls
 FROM `raw.products` pr
-LEFT JOIN `raw.pictures` p ON (p.id, 'product') = (p.external_id, p.type)
+  LEFT JOIN `raw.pictures` p ON pr.external_id = p.external_id
+WHERE p.type = 'product'
 GROUP BY 1
