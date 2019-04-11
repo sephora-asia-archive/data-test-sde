@@ -80,6 +80,8 @@ Upon execution, the `tmp` and `final` datasets should be populated based on the 
 - For point A-1, parsing the query will be necessary. We can assume the shape of the tables in the scripts will always be `dataset_name.table_name`
 
 
+- For point A-1, your code should be flexible enough so that it will still work properly if more scripts are added in the tmp or final folder
+
 - For points A-2 and A-3, you can use a dummy function such as the following as a placeholder for the function actually running the sql scripts (here in golang):
 
 ```go
